@@ -1,0 +1,4 @@
+[submodule "deps/mcp2515_driver"]
+	path = deps/mcp2515_driver
+	url = git@neo-web.nl:~/pico/mcp2515_driver.git
+	branch = main
