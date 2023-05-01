@@ -36,3 +36,5 @@ target_include_directories(NeoCAN-project PRIVATE
         ${CMAKE_CURRENT_LIST_DIR}/..)
 
 pico_add_extra_outputs(NeoCAN-project)
+
+add_subdirectory(examples)
