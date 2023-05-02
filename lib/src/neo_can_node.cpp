@@ -22,6 +22,7 @@ int neo_can_node::add_protocol(abstract_can_protocol *protocol)
     if (protocol == NULL || !protocol->set_parent_node(this))
         return 0;
 
+    protocol->set_parent_node(this);
     protocols.push_back(protocol);
 
     return 1;

@@ -83,7 +83,7 @@ const non_participant_t *non_organizer::get_participant(non_uuid_t uuid)
 {
     for (auto participant : participants)
         if (participant.uuid == uuid)
-            return &participant;
+            return participant;
 
     return nullptr;
 }
