@@ -3,12 +3,13 @@
 
 #include "abstract_can_driver.hpp"
 #include "abstract_can_protocol.hpp"
+#include "abstract_node.hpp"
 
 #include <stdio.h>
 
 #include <vector>
 
-class neo_can_node
+class neo_can_node: public abstract_node
 {
 private:
     abstract_can_driver *driver;

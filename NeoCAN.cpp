@@ -9,8 +9,8 @@ int main() {
 
     mcp2515_can_driver driver(spi0, 20, 19, 18, 21, 10 * 1000 * 1000);
 
-    driver.set_mode(LOOPBACK_MODE);
-
+    printf("%d\n", driver.read_register(0x2B));
+    
     uint8_t rx0_mask[4];
     driver.read_registers(RXM0SIDH, rx0_mask, sizeof(rx0_mask));
     uint8_t rx1_mask[4];

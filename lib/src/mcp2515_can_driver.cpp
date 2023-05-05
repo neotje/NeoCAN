@@ -2,6 +2,7 @@
 #include "neotje/mcp2515_timing.h"
 #include "neotje/mcp2515_registers.h"
 #include "neotje/mcp2515_bits.h"
+#include <stdio.h>
 
 #ifndef mcp2515_can_driver_hpp
 #include "mcp2515_can_driver.hpp"
@@ -11,18 +12,24 @@ void mcp2515_can_driver::setup()
 {
     this->init();
 
-    int brp = mcp2515_timing_brp(12000000, 6, this->config.baudrate);
+    //int brp = mcp2515_timing_brp(8000000, 6, this->config.baudrate);
 
-    this->write_register(CNF1, brp & BRP_MASK);
-    this->write_register(CNF2, BV(BLTMODE) | BV(PHSEG10)); // set phase segment 1 to 2Tqs
-    this->write_register(CNF3, BV(SOF) | BV(PHSEG20)); // set SOF to 1Tq
+    //this->write_register(CNF1, brp & BRP_MASK);
+    //this->write_register(CNF2, BV(BLTMODE) | BV(PHSEG10)); // set phase segment 1 to 2Tqs
+    //this->write_register(CNF3, BV(SOF) | BV(PHSEG20)); // set SOF to 1Tq
+
+    this->write_register(CNF1, 0x00);
+    this->write_register(CNF2, 0x80); // set phase segment 1 to 2Tqs
+    this->write_register(CNF3, 0x80); // set SOF to 1Tq
 
     // set RXM to 00 Receives all vallid messages using either standard or extended identifiers that meet filter criteria.
     // set BUKT to 1 to enable rollover to RXB1 if RXB0 is full.
-    this->bit_modify(RXB0CTRL, RXM_MASK | BV(BUKT), BV(BUKT)); 
+    //this->bit_modify(RXB0CTRL, RXM_MASK | BV(BUKT) | BV(FILHIT0), BV(BUKT)); 
+    this->bit_modify(RXB0CTRL, BV(RXM1) | BV(RXM0) | BV(BUKT) | BV(FILHIT0), BV(RXM1) | BV(RXM0));
 
     // set RXM to 00 Receives all vallid messages using either standard or extended identifiers that meet filter criteria.
-    this->bit_modify(RXB1CTRL, RXM_MASK, 0);
+    //this->bit_modify(RXB1CTRL, RXM_MASK | BM(3, FILHIT0), 0 | BV(FILHIT0));
+    this->bit_modify(RXB1CTRL, BV(RXM1) | BV(RXM0) | BM(4, FILHIT0), BV(FILHIT0) | BV(RXM1) | BV(RXM0));
 
     // clear all filters and masks
     for (size_t i = 0; i < 6; i++)

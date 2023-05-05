@@ -8,7 +8,7 @@ abstract_can_protocol::~abstract_can_protocol()
 {
 }
 
-int abstract_can_protocol::set_parent_node(neo_can_node *parent_node)
+int abstract_can_protocol::set_parent_node(abstract_node *parent_node)
 {
     if (this->parent_node != nullptr) return 0;
 
@@ -17,7 +17,7 @@ int abstract_can_protocol::set_parent_node(neo_can_node *parent_node)
     return 1;
 }
 
-neo_can_node *abstract_can_protocol::get_parent_node()
+abstract_node *abstract_can_protocol::get_parent_node()
 {
     return this->parent_node;
 }
