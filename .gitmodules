@@ -2,3 +2,6 @@
 	path = deps/mcp2515_driver
 	url = git@neo-web.nl:~/pico/mcp2515_driver.git
 	branch = main
+[submodule "deps/can2040"]
+	path = deps/can2040
+	url = https://github.com/KevinOConnor/can2040.git
