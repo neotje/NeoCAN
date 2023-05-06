@@ -16,7 +16,7 @@ project(NeoCAN-project C CXX ASM)
 
 pico_sdk_init()
 pico_add_subdirectory(lib)
-pico_add_subdirectory(deps/mcp2515_driver/lib)
+pico_add_subdirectory(deps)
 
 add_executable(NeoCAN-project
   NeoCAN.cpp
