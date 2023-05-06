@@ -1,5 +1,6 @@
 #include "neotje/protocols/non_organizer.hpp"
 #include "neotje/can.h"
+#include "neotje/debug.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,14 +33,19 @@ void non_organizer::on_message(can_frame_t *frame)
     {
         uint32_t eid = can_get_eid(frame);
 
+        // Recieved INIT message
         if (eid >= 1 && eid <= 3 && frame->dlc == 4)
-        {
+        {   
+            // Collect assign data
             uint32_t uuid;
             memcpy(&uuid, frame->data, sizeof(uuid));
             non_priority_level_t prio = (non_priority_level_t)(eid - 1);
 
+            debug_print("Recieved INIT message from node UUID %d and priority %d\n", uuid, prio);
+
             const non_participant_t *participant = this->init_participant(uuid, prio);
 
+            // Send ASSIGN message
             if (participant) this->send_assign(participant, prio);
         }
     }
@@ -107,6 +113,8 @@ const non_participant_t *non_organizer::init_participant(non_uuid_t uuid, non_pr
     new_participant->node_id = (uint16_t)new_node_id;
     this->participants.push_back(new_participant);
 
+    debug_print("Assigning newly added node UUID %d to node ID %d\n", uuid, new_node_id);
+
     return this->participants.back();
 }
 
@@ -119,6 +127,8 @@ int non_organizer::send_assign(const non_participant_t *participant, non_priorit
         .dlc = sizeof(*participant),
         .data = (uint8_t*)participant
     };
+
+    debug_print("Sending ASSIGN message to node UUID %d with node ID %d\n", participant->uuid, participant->node_id);
 
     return get_parent_node()->get_driver()->send_message(&assign_frame);
 }
