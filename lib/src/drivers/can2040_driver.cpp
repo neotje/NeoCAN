@@ -15,6 +15,8 @@ struct can2040 can2040_driver::cbus;
 can2040_driver* can2040_driver::instance = nullptr;
 std::queue<can_frame_t*> can2040_driver::rx_queue;
 
+struct can2040_msg temp_msg;
+
 void can_frame_t_to_can2040_msg(can_frame_t* can_frame, struct can2040_msg* can2040_msg)
 {
     can2040_msg->id = can_frame->id;
@@ -73,10 +75,13 @@ void can2040_driver::can2040_cb(can2040* cb, uint32_t notify, can2040_msg* msg)
 
 int can2040_driver::send_message(can_frame_t* message)
 {
-    struct can2040_msg can2040_msg;
-    can_frame_t_to_can2040_msg(message, &can2040_msg);
+    if (!can2040_check_transmit(&cbus)) {
+        return 0;
+    }
 
-    return can2040_transmit(&cbus, &can2040_msg);
+    can_frame_t_to_can2040_msg(message, &temp_msg);
+
+    return can2040_transmit(&cbus, &temp_msg) != -1;
 }
 
 int can2040_driver::receive_message(can_frame_t* message)

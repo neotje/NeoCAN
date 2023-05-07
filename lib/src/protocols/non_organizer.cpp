@@ -39,9 +39,9 @@ void non_organizer::on_message(can_frame_t *frame)
             // Collect assign data
             uint32_t uuid;
             memcpy(&uuid, frame->data, sizeof(uuid));
-            non_priority_level_t prio = (non_priority_level_t)(eid - 1);
+            non_priority_level_t prio = (non_priority_level_t)(eid);
 
-            debug_print("Recieved INIT message from node UUID %d and priority %d\n", uuid, prio);
+            printf("Recieved INIT message from node UUID %d and priority %d\n", uuid, prio);
 
             const non_participant_t *participant = this->init_participant(uuid, prio);
 
@@ -113,7 +113,7 @@ const non_participant_t *non_organizer::init_participant(non_uuid_t uuid, non_pr
     new_participant->node_id = (uint16_t)new_node_id;
     this->participants.push_back(new_participant);
 
-    debug_print("Assigning newly added node UUID %d to node ID %d\n", uuid, new_node_id);
+    printf("Assigning newly added node UUID %d to node ID %d\n", uuid, new_node_id);
 
     return this->participants.back();
 }
@@ -121,14 +121,14 @@ const non_participant_t *non_organizer::init_participant(non_uuid_t uuid, non_pr
 int non_organizer::send_assign(const non_participant_t *participant, non_priority_level_t prio)
 {
     can_frame_t assign_frame = {
-        .id = CAN_SID_EID_TO_UINT(get_parent_node()->get_node_id(), (uint)(1 + prio)),
+        .id = CAN_SID_EID_TO_UINT(get_parent_node()->get_node_id(), (uint)(prio)),
         .rtr = false,
         .extended = true,
         .dlc = sizeof(*participant),
         .data = (uint8_t*)participant
     };
 
-    debug_print("Sending ASSIGN message to node UUID %d with node ID %d\n", participant->uuid, participant->node_id);
+    printf("Sending ASSIGN message to node UUID %d with node ID %d\n", participant->uuid, participant->node_id);
 
     return get_parent_node()->get_driver()->send_message(&assign_frame);
 }

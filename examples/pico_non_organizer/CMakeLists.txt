@@ -7,7 +7,7 @@ pico_set_program_name(pico_non_organizer "pico_non_organizer")
 pico_set_program_version(pico_non_organizer "0.1")
     
 pico_enable_stdio_uart(pico_non_organizer 1)
-pico_enable_stdio_usb(pico_non_organizer 0)
+pico_enable_stdio_usb(pico_non_organizer 1)
     
 target_link_libraries(pico_non_organizer 
     pico_stdlib

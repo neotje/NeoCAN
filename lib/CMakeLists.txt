@@ -12,7 +12,9 @@ if (NOT TARGET neotje_NeoCAN)
     pico_mirrored_target_link_libraries(neotje_NeoCAN INTERFACE
         pico_stdlib
         neotje_mcp2515
-        KevinOConnor_can20400)
+        KevinOConnor_can20400
+        pico_unique_id
+        pico_time)
     
     pico_add_doxygen(${CMAKE_CURRENT_LIST_DIR}/include)
 endif()
