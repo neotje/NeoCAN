@@ -38,3 +38,4 @@ target_include_directories(NeoCAN-project PRIVATE
 pico_add_extra_outputs(NeoCAN-project)
 
 add_subdirectory(examples)
+add_subdirectory(tools)
