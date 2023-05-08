@@ -41,11 +41,10 @@ void can2040_msg_to_can_frame_t(struct can2040_msg* can2040_msg, can_frame_t* ca
     can_frame->extended = true ? can2040_msg->id & CAN2040_ID_EFF : false;
     can_frame->rtr = true ? can2040_msg->id & CAN2040_ID_RTR : false;
 
-    if (can_frame->data != nullptr) {
-        free(can_frame->data);
-    }
-
-    can_frame->data = (uint8_t*)malloc(can_frame->dlc);
+    if (can_frame->data == nullptr) 
+        can_frame->data = (uint8_t*)malloc(can_frame->dlc);
+    else
+        can_frame->data = (uint8_t*)realloc(can_frame->data, can_frame->dlc);   
 
     memcpy(can_frame->data, can2040_msg->data, can_frame->dlc);
 }
@@ -65,7 +64,7 @@ void can2040_driver::irqhandler(void)
 
 void can2040_driver::can2040_cb(can2040* cb, uint32_t notify, can2040_msg* msg)
 {
-    can_frame_t* can_frame = (can_frame_t*)malloc(sizeof(can_frame_t));
+    can_frame_t* can_frame = (can_frame_t*)calloc(sizeof(can_frame_t));
     can_frame->data = nullptr;
 
     can2040_msg_to_can_frame_t(msg, can_frame);

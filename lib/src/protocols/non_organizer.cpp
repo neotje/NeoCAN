@@ -108,7 +108,7 @@ const non_participant_t *non_organizer::init_participant(non_uuid_t uuid, non_pr
     if (new_node_id == -1)
         return nullptr;
 
-    non_participant_t *new_participant = (non_participant_t *)malloc(sizeof(non_participant_t));
+    non_participant_t *new_participant = (non_participant_t *)calloc(sizeof(non_participant_t));
     new_participant->uuid = uuid;
     new_participant->node_id = (uint16_t)new_node_id;
     this->participants.push_back(new_participant);
