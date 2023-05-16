@@ -11,8 +11,11 @@
 int main() {
     stdio_init_all();
 
+    printf("Hello, world!\n");
+
     //mcp2515_can_driver *driver = new mcp2515_can_driver(spi0, 20, 19, 18, 21, 1 * 1000 * 1000);
-    can2040_driver *driver = can2040_driver::get_instance(1000000, 2, 3);
+    //can2040_driver *driver = can2040_driver::get_instance(1000000, 2, 3);
+    can2040_driver *driver = can2040_driver::get_instance(125000, 2, 3);
 
     neo_can_node node(driver, UNKOWN_NODE_ID);
 

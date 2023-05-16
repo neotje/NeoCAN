@@ -11,6 +11,7 @@ pico_enable_stdio_usb(pico_non_organizer 1)
     
 target_link_libraries(pico_non_organizer 
     pico_stdlib
+    pico_bootsel_via_double_reset
     neotje_NeoCAN)
     
 pico_add_extra_outputs(pico_non_organizer)
