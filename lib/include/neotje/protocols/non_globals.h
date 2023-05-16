@@ -15,6 +15,8 @@
 
 #define UNKOWN_NODE_ID UINT16_MAX
 
+#define REINIT_EID 0
+
 #define NON_PARTICIPANT_SEND_INTERVAL 1000
 
 typedef uint32_t non_uuid_t;

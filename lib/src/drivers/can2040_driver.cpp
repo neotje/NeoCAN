@@ -64,7 +64,7 @@ void can2040_driver::irqhandler(void)
 
 void can2040_driver::can2040_cb(can2040* cb, uint32_t notify, can2040_msg* msg)
 {
-    can_frame_t* can_frame = (can_frame_t*)calloc(sizeof(can_frame_t));
+    can_frame_t* can_frame = (can_frame_t*)malloc(sizeof(can_frame_t));
     can_frame->data = nullptr;
 
     can2040_msg_to_can_frame_t(msg, can_frame);

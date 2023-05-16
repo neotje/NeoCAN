@@ -27,6 +27,12 @@ non_organizer::non_organizer()
 {
 }
 
+void non_organizer::setup()
+{
+    // Send REINIT message
+    this->send_reinit();
+}
+
 void non_organizer::on_message(can_frame_t *frame)
 {
     if (can_get_sid(frame) == this->get_parent_node()->get_node_id() && frame->extended)
@@ -108,7 +114,7 @@ const non_participant_t *non_organizer::init_participant(non_uuid_t uuid, non_pr
     if (new_node_id == -1)
         return nullptr;
 
-    non_participant_t *new_participant = (non_participant_t *)calloc(sizeof(non_participant_t));
+    non_participant_t *new_participant = (non_participant_t *)malloc(sizeof(non_participant_t));
     new_participant->uuid = uuid;
     new_participant->node_id = (uint16_t)new_node_id;
     this->participants.push_back(new_participant);
@@ -131,4 +137,19 @@ int non_organizer::send_assign(const non_participant_t *participant, non_priorit
     printf("Sending ASSIGN message to node UUID %d with node ID %d\n", participant->uuid, participant->node_id);
 
     return get_parent_node()->get_driver()->send_message(&assign_frame);
+}
+
+int non_organizer::send_reinit()
+{
+    can_frame_t reinit_frame = {
+        .id = CAN_SID_EID_TO_UINT(get_parent_node()->get_node_id(), REINIT_EID),
+        .rtr = true,
+        .extended = true,
+        .dlc = sizeof(uint32_t),
+        .data = nullptr
+    };
+
+    printf("Sending REINIT message\n");
+
+    return get_parent_node()->get_driver()->send_message(&reinit_frame);
 }

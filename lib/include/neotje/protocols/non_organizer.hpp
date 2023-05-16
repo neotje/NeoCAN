@@ -12,7 +12,10 @@ private:
     std::vector<non_participant_t*> participants;
 public:
     non_organizer();
+    ~non_organizer(){};
 
+    /* Inherited from abstract_can_protocol */
+    void setup();
     void loop(){};
     void on_message(can_frame_t *frame);
 
@@ -21,6 +24,7 @@ public:
     const non_participant_t *init_participant(non_uuid_t uuid, non_priority_level_t priority);
 
     int send_assign(const non_participant_t *participant, non_priority_level_t prio);
+    int send_reinit();
 };
 
 #endif
