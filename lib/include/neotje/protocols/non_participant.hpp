@@ -12,15 +12,20 @@ private:
     non_priority_level_t priority;
     uint32_t uuid;
 
-    absolute_time_t next_time;
+    struct repeating_timer timer;
+    static bool send_init_timer_cb(struct repeating_timer* t);
 
 public:
     non_participant(non_priority_level_t priority);
-    ~non_participant();
+    ~non_participant() {};
 
-    /* Inherited from abstract_can_protocol*/
+    /* Inherited from abstract_can_protocol */
+    void setup();
     void loop();
     void on_message(can_frame_t* frame);
+
+    void start_timer();
+    void stop_timer();
 
     int send_init();
 };

@@ -18,6 +18,7 @@ public:
     abstract_node *get_parent_node();
 
     virtual void on_message(can_frame_t *frame) = 0;
+    virtual void setup() = 0;
     virtual void loop() = 0;
 };
 
