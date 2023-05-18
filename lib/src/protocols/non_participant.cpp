@@ -58,6 +58,7 @@ void non_participant::on_message(can_frame_t* frame)
         if (eid == REINIT_EID && frame->rtr && frame->dlc == sizeof(this->uuid))
         {
             printf("Recieved REINIT message from organizer. Resetting node id\n");
+            stop_timer();
             start_timer();
             return;
         }
