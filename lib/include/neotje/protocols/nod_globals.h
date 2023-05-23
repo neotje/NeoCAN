@@ -13,6 +13,7 @@ typedef uint32_t nod_value_t;
 #define NODE_VALUE_SIZE sizeof(nod_value_t)
 
 #define NOD_ADDRESS_TO_EID(address) (address + NOD_START_EID)
+#define NOD_EID_TO_ADDRESS(eid) (eid - NOD_START_EID)
 
 const int NOD_DICTIONARY_LEN = NOD_DICTIONARY_SIZE / NODE_VALUE_SIZE;
 
