@@ -24,7 +24,7 @@ typedef uint32_t non_uuid_t;
 typedef struct __attribute__ ((packed))
 {
     non_uuid_t uuid;
-    uint16_t node_id;
+    node_id_t node_id;
 } non_participant_t;
 
 typedef enum

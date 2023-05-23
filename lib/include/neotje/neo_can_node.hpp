@@ -15,18 +15,18 @@ private:
     abstract_can_driver *driver;
     std::vector<abstract_can_protocol *> protocols;
 
-    uint16_t node_id;
+    node_id_t node_id;
 
 public:
-    neo_can_node(abstract_can_driver *a_driver, uint16_t a_node_id);
+    neo_can_node(abstract_can_driver *a_driver, node_id_t a_node_id);
     ~neo_can_node();
 
     abstract_can_driver *get_driver();
 
     int add_protocol(abstract_can_protocol *protocol);
 
-    void set_node_id(uint16_t node_id);
-    uint16_t get_node_id();
+    void set_node_id(node_id_t node_id);
+    node_id_t get_node_id();
 
     void loop();
 };

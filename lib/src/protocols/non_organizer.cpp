@@ -116,7 +116,7 @@ const non_participant_t *non_organizer::init_participant(non_uuid_t uuid, non_pr
 
     non_participant_t *new_participant = (non_participant_t *)malloc(sizeof(non_participant_t));
     new_participant->uuid = uuid;
-    new_participant->node_id = (uint16_t)new_node_id;
+    new_participant->node_id = (node_id_t)new_node_id;
     this->participants.push_back(new_participant);
 
     printf("Assigning newly added node UUID %d to node ID %d\n", uuid, new_node_id);
