@@ -1,3 +1,4 @@
 add_subdirectory(pico_non_organizer)
 add_subdirectory(pico_non_participant)
 add_subdirectory(can2040_driver_test)
+add_subdirectory(pico_nod_server)

@@ -1,4 +1,5 @@
 #include "neotje/protocols/nod_server.hpp"
+#include "neotje/protocols/nod_utils.hpp"
 #include "neotje/can.h"
 
 nod_server::nod_server()
