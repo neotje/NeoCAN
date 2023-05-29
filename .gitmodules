@@ -5,3 +5,4 @@
 [submodule "deps/can2040"]
 	path = deps/can2040
 	url = https://github.com/KevinOConnor/can2040.git
+    branch = master
